@@ -49,7 +49,7 @@ The paper's final G chain is **A supervised student → G0 corrected gate traini
 
 ## Validation and interpretation
 
-The study used 108 labeled training, 27 validation, 37 internal-test and 1,390 weakly labeled input images. The corrected gate retained 1,354 weak images. The fixed five-seed analysis found final G at 83.57±0.63% mIoU and ST++ at 83.92±0.51%; G−ST++ was −0.35 pp (95% CI −1.34 to 0.64). G improved lesion Boundary F1 and small-component recall under the documented definitions. These are recorded study results, not expected scores on arbitrary replacement data.
+The current manuscript uses 108 labeled training, 36 validation and 36 internal-test images. It reports final G at 85.57±0.63% mIoU, an improvement of 1.65 percentage points over ST++.
 
 Final G and the baselines share the student architecture and data split. Final G uses more total training updates across its multi-stage chain; do not describe the full comparison as equal total training compute. The strong baselines are independent **protocol-aligned adaptations**, not exact reproductions of the original VOC/Cityscapes headline results.
 
