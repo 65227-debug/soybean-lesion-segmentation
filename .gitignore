@@ -22,7 +22,6 @@
 *.tar.gz
 *.tgz
 !mmseg/utils/bpe_simple_vocab_16e6.txt.gz
-!projects/CAT-Seg/cat_seg/utils/bpe_vocab/bpe_simple_vocab_16e6.txt.gz
 *.log
 *.log.json
 

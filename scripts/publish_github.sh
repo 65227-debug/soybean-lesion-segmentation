@@ -45,10 +45,10 @@ git add --all
 if ! git diff --cached --quiet; then
   git -c user.name="$LOGIN" \
       -c user.email="${ACCOUNT_ID}+${LOGIN}@users.noreply.github.com" \
-      commit -m "Release soybean lesion segmentation research code without datasets or weights"
+      commit -m "Release soybean segmentation model and inference sources"
 fi
 gh auth setup-git --hostname github.com
 gh repo create "$TARGET" "$VISIBILITY" --source=. --remote=origin --push \
-  --description "Research code for soybean lesion segmentation with leaf spatial constraints and disease-semantic evidence; includes MMSegmentation source, no datasets or weights."
+  --description "Soybean lesion segmentation model architectures and inference tools with MMSegmentation source."
 gh repo view "$TARGET" --json url,visibility --jq '{url, visibility}'
 git rev-parse HEAD

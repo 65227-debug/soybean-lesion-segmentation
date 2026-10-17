@@ -1,73 +1,16 @@
 {
-  "scope": "Code only: full mmseg Python package, configs, tools, projects, paper code and text documentation",
-  "excluded": [
-    "datasets",
-    "images",
-    "pixel annotations",
-    "dataset manifests",
-    "predictions",
-    "training results",
-    "model weights",
-    "checkpoints",
-    "archives",
-    "binary test fixtures",
-    "personal IDE settings"
+  "scope": "Soybean model architectures and inference utilities with MMSegmentation source",
+  "mmseg_python_files": 189,
+  "model_configs": [
+    "configs/soybean/teacher.py",
+    "configs/soybean/leaf.py",
+    "configs/soybean/student.py"
   ],
-  "copied_source_files": 1738,
-  "python_files_syntax_checked": 1456,
-  "portable_path_changes": [
-    "configs/_base_/datasets/MyDatasets_pipeline.py",
-    "configs/dadou/README.md",
-    "tools/dadou_semantic/README.md",
-    "paper_code/ablation_abdec/run_abdec.sh",
-    "paper_code/corrected_f_training/README_CN.md",
-    "paper_code/corrected_f_training/export_final_g_process.py",
-    "paper_code/corrected_f_training/run_corrected_f.sh",
-    "paper_code/external_test/prepare_external_unlabeled_80.py",
-    "paper_code/q1_upgrade_experiments/run_q1_upgrade_experiments.sh",
-    "paper_code/step9_student_training/README_CN.md",
-    "paper_code/step9_student_training/run_step9.sh",
-    "paper_code/strong_ssl_baselines/README_CN.md",
-    "paper_code/submission_supplement_experiments/run_label_fraction_curves.sh",
-    "paper_code/submission_supplement_experiments/run_multiseed_g0cal.sh",
-    "paper_code/submission_supplement_experiments/run_multiseed_g_stpp.sh"
+  "inference_tools": [
+    "tools/dadou/infer_teacher.py",
+    "tools/dadou/infer_leaf.py",
+    "tools/dadou/export_inference_checkpoint.py",
+    "tools/dadou_semantic/export_multilayer_layercam.py"
   ],
-  "frozen_configs": {
-    "paper_code/corrected_f_training/selected_gating_config.json": {
-      "unchanged": false,
-      "sha256": "5dbeec85d41507a7835e74cf52e2c9c27ace908bd05699c23ae060a53aeeb4cc"
-    },
-    "paper_code/corrected_f_training/training_config.json": {
-      "unchanged": true,
-      "sha256": "33efcd088dc3b522542e9e1ccbb1e792904c496b9bdf23836c691297933f3a18"
-    },
-    "paper_code/corrected_f_training/distillation_config.json": {
-      "unchanged": true,
-      "sha256": "654e8ce506d2001680ebf9ccd6c09fd583a34c55b21230adb5ec4d35a1a3e2a4"
-    },
-    "paper_code/submission_supplement_experiments/frozen_experiment_plan.json": {
-      "unchanged": false,
-      "sha256": "71821067df581e9ceade25d6d340fdaf1c7ff0ab1f88cc44221b951670b12524"
-    },
-    "paper_code/strong_ssl_baselines/aligned_protocol.json": {
-      "unchanged": false,
-      "sha256": "85d7a74589b7a495f7309fb69bf003123cfda93627b57b7a18c5b7fb973f66e4"
-    }
-  },
-  "skipped_file_groups": {
-    "excluded_path": 344,
-    ".gz": 2,
-    ".png": 3,
-    ".ipynb": 1,
-    "no_suffix": 2,
-    ".css": 2,
-    ".jpg": 1
-  },
-  "dataset_dependent_training_performed_for_release": false,
-  "upstream_tokenizer_resources_included": [
-    "mmseg/utils/bpe_simple_vocab_16e6.txt.gz",
-    "projects/CAT-Seg/cat_seg/utils/bpe_vocab/bpe_simple_vocab_16e6.txt.gz"
-  ],
-  "publication_status": "Code-only research source release",
-  "github_repository": "https://github.com/652276002-debug/soybean-lesion-segmentation"
+  "github_repository": "https://github.com/65227-debug/soybean-lesion-segmentation"
 }

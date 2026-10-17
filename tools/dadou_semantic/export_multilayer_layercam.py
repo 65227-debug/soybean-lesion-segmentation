@@ -23,9 +23,9 @@ IMAGENET_STD = (0.229, 0.224, 0.225)
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('checkpoint')
-    parser.add_argument('--manifest', default='data/dadou_semantic/val_manifest.csv')
+    parser.add_argument('--manifest', required=True)
     parser.add_argument(
-        '--output-dir', default='outputs/dadou_semantic_layercam_val')
+        '--output-dir', default='outputs/soybean_semantic_layercam')
     parser.add_argument(
         '--target', choices=('label', 'prediction'), default='label')
     parser.add_argument('--max-images', type=int, default=None)

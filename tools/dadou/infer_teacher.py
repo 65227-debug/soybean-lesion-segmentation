@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Run the trained teacher and export masks plus lesion probability maps."""
+"""Export class masks and lesion probability maps from a segmentation model."""
 
 import argparse
 import csv
@@ -21,7 +21,7 @@ def parse_args():
     parser.add_argument('config')
     parser.add_argument('checkpoint')
     parser.add_argument('input', help='Image file or image directory')
-    parser.add_argument('--output-dir', default='outputs/dadou_teacher')
+    parser.add_argument('--output-dir', default='outputs/soybean_teacher')
     parser.add_argument('--device', default='cuda:0')
     return parser.parse_args()
 
@@ -43,7 +43,7 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     # MMEngine checkpoints contain HistoryBuffer in their metadata. PyTorch
     # 2.6+ defaults to a restricted loader, so explicitly allow this trusted
-    # MMEngine type for checkpoints produced by this local training run.
+    # MMEngine metadata type for compatible checkpoints.
     torch.serialization.add_safe_globals([HistoryBuffer])
     model = init_model(args.config, args.checkpoint, device=args.device)
 

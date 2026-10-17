@@ -11,7 +11,7 @@ from mmengine.runner import Runner
 def parse_args():
     parser = argparse.ArgumentParser(
         description='MMSeg test (and eval) a model')
-    parser.add_argument('config', help='train config file path')
+    parser.add_argument('config', help='model evaluation config file path')
     parser.add_argument('checkpoint', help='checkpoint file')
     parser.add_argument(
         '--work-dir',
@@ -48,7 +48,7 @@ def parse_args():
     parser.add_argument(
         '--tta', action='store_true', help='Test time augmentation')
     # When using PyTorch version >= 2.0.0, the `torch.distributed.launch`
-    # will pass the `--local-rank` parameter to `tools/train.py` instead
+    # will pass the `--local-rank` parameter to this script instead
     # of `--local_rank`.
     parser.add_argument('--local_rank', '--local-rank', type=int, default=0)
     args = parser.parse_args()

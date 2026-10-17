@@ -23,9 +23,9 @@ def main():
     if not Path(mmseg.__file__).resolve().is_relative_to(ROOT):
         raise RuntimeError("Model check must import this release's mmseg package")
     configurations = [
-        ("student", "paper_code/step9_student_training/mmseg_student_config.py", 3),
-        ("teacher", "configs/dadou/deeplabv3plus_r50-d8_1xb4-60e_dadou-512x512.py", 3),
-        ("leaf", "configs/dadou/unet-s5-d16_fcn_1xb4-60e_dadou-leaf-512x512.py", 2),
+        ("student", "configs/soybean/student.py", 3),
+        ("teacher", "configs/soybean/teacher.py", 3),
+        ("leaf", "configs/soybean/leaf.py", 2),
     ]
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     reports = []

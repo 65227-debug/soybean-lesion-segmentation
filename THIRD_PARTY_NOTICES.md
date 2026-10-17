@@ -1,21 +1,15 @@
-# Third-party source and method attribution
+# Third-party attribution
 
 ## OpenMMLab MMSegmentation
 
-This code release vendors the local MMSegmentation 1.2.2 source tree used by the experiments. Upstream: <https://github.com/open-mmlab/mmsegmentation>. The original Apache-2.0 license, copyright headers, `CITATION.cff`, model/config citations and text documentation are retained. Original top-level README files are preserved in `docs/upstream/`. The source project was not a Git checkout, so an exact upstream base commit is not asserted.
+The repository includes the MMSegmentation 1.2.2 Python package. Upstream: <https://github.com/open-mmlab/mmsegmentation>. Retain the Apache-2.0 license, copyright headers, `CITATION.cff` and model/config citations.
 
-Soybean-specific extensions are located in `configs/dadou/`, `projects/dadou_teacher/`, `tools/dadou/`, `tools/dadou_semantic/`, and `paper_code/`. Mechanical local-path substitutions are listed in `CODE_RELEASE_MANIFEST.json`. This release uses the repository's Apache-2.0 license; third-party notices remain attached to their respective source files and references.
+Soybean model definitions and inference utilities are located in `configs/soybean/`, `projects/dadou_teacher/`, `tools/dadou/` and `tools/dadou_semantic/`.
 
-## Semi-supervised method references
+## Model references
 
-The implementations in `paper_code/strong_ssl_baselines/` are independent protocol-aligned adaptations. Their consulted reference repositories and pinned commits are recorded verbatim in `paper_code/strong_ssl_baselines/OFFICIAL_REFERENCES.json`:
+DeepLabV3+, ResNet, MobileNetV3, U-Net, EfficientNet and LayerCAM retain their original authorship and citations. No authorship of these upstream methods is claimed here.
 
-- UniMatch: <https://github.com/LiheYoung/UniMatch>, MIT.
-- ST++: <https://github.com/LiheYoung/ST-PlusPlus>, MIT.
-- U²PL: <https://github.com/haochen-wang409/U2PL>, Apache-2.0.
+## Dataset files
 
-The official repositories are not bundled. Use the official project citations alongside this implementation's citation. Backbone, DeepLabV3+, U-Net, EfficientNet and LayerCAM method references should also be cited in the manuscript. No authorship of those methods is claimed here.
-
-## Data and checkpoints
-
-Dataset files retain their respective rights and notices. The Git source tree and code archive do not include datasets or checkpoints. Separate dataset release assets provide images, annotations and split manifests with their own package notices; the software's Apache-2.0 license is not automatically applied to those files.
+Dataset files retain their respective rights and notices. The software's Apache-2.0 license is not automatically applied to separately downloaded datasets.

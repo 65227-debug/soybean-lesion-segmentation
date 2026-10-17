@@ -19,7 +19,7 @@ def parse_args():
     parser.add_argument('config')
     parser.add_argument('checkpoint')
     parser.add_argument('input', help='Image file or image directory')
-    parser.add_argument('--output-dir', default='outputs/dadou_leaf')
+    parser.add_argument('--output-dir', default='outputs/soybean_leaf')
     parser.add_argument('--device', default='cuda:0')
     return parser.parse_args()
 

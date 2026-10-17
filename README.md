@@ -1,67 +1,41 @@
-# Soybean lesion segmentation: dual-evidence semi-supervised learning
+# Soybean Lesion Segmentation
 
-Research code for **semi-supervised soybean lesion segmentation with leaf spatial constraints and disease-semantic soft evidence**.
+Model architectures and image inference for soybean leaf and lesion segmentation, based on MMSegmentation 1.2.2.
 
-This repository contains the complete local MMSegmentation **1.2.2 Python package (199 Python files)**, model configurations, custom dataset/metric hooks, and experiment scripts. Datasets are provided separately as release assets, not stored in the Git source tree. Model weights, checkpoints, training results and paper drafts are not included. Obtain the referenced pretrained weights separately.
+中文说明：[README_zh-CN.md](README_zh-CN.md)。
 
-中文说明见 [README_zh-CN.md](README_zh-CN.md).
+## Models
 
-## Dataset downloads
-
-- [Soybean lesion segmentation dataset v2.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-v2.0.0): 172 pixel-labeled images and 1,395 image-level/weakly labeled images, totaling 1,567 distinct originals. Includes masks and annotations, with no fixed train/validation/test split or pseudo-label cache.
-- [Soybean original image and mask pairs v2.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-original-pairs-v2.0.0): 617 original image/mask pairs, without a fixed split.
-- [MH-SoyaHealthVision experiment subset v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0): 80 manually annotated test images and 80 disjoint unlabeled adaptation images.
-
-Configure your own train/validation/test splits before preparing the local training layout. Dataset files do not automatically inherit the software license.
-
-## Code download
-
-- [Source code v1.1.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/v1.1.0): complete MMSegmentation package (199 Python files), project configurations, tools and experiment scripts; no datasets, model weights, checkpoints or results.
-
-## Models and labels
-
-| Component | Model | Role |
+| Component | Architecture | Configuration |
 | --- | --- | --- |
-| Lesion teacher | DeepLabV3+ / ResNet-50 | Background / healthy leaf / lesion probabilities |
-| Independent leaf model | U-Net | Leaf probability and trustworthy interior |
-| Disease-semantic model | EfficientNet-B0 + multi-layer LayerCAM | Frogeye / target-spot image semantics |
-| Student | DeepLabV3+ / MobileNetV3-Large | Three-class lesion segmentation at 512×512 |
+| Lesion teacher | DeepLabV3+ / ResNet-50 | `configs/soybean/teacher.py` |
+| Leaf segmentation | U-Net | `configs/soybean/leaf.py` |
+| Lesion student | DeepLabV3+ / MobileNetV3-Large | `configs/soybean/student.py` |
+| Disease semantics | EfficientNet-B0 / LayerCAM | `tools/dadou_semantic/export_multilayer_layercam.py` |
 
-Pixel labels are `0=background`, `1=healthy_leaf`, `2=lesion`, `255=ignore`. Pseudo-label weights are float values in `[0,1]`; ignore pixels have zero weight. See the frozen configuration in `paper_code/corrected_f_training/selected_gating_config.json`.
+Pixel labels: `0=background`, `1=healthy_leaf`, `2=lesion`; the leaf model uses `0=background`, `1=leaf`.
 
-## Start here
+## Inference
 
-1. [Installation and recorded environment](docs/PAPER_INSTALLATION.md).
-2. [Data contracts and preparation](docs/PAPER_DATA.md).
-3. [Final G reproduction and supplementary experiments](docs/PAPER_REPRODUCTION.md).
-4. [Code map and third-party attribution](THIRD_PARTY_NOTICES.md).
+Follow [installation](docs/PAPER_INSTALLATION.md), then supply the matching model checkpoint:
 
-The paper's final G chain is **A supervised student → G0 corrected gate training → G1 distillation → validation-only class-logit calibration → frozen test**. The publication entry point is the frozen plan in `paper_code/submission_supplement_experiments/frozen_experiment_plan.json`. Earlier F/G3/G4 trials remain in the code as historical development variants; they are not interchangeable with the final G.
+```bash
+python tools/dadou/infer_teacher.py configs/soybean/student.py model.pth image.jpg --output-dir outputs/student
+python tools/dadou/infer_teacher.py configs/soybean/teacher.py model.pth images/ --output-dir outputs/teacher
+python tools/dadou/infer_leaf.py configs/soybean/leaf.py model.pth images/ --output-dir outputs/leaf
+```
 
-## Code map
+The probability exporters write class masks, overlays and uint16 probability maps. LayerCAM usage is available through `python tools/dadou_semantic/export_multilayer_layercam.py --help`.
 
-| Directory | Contents |
-| --- | --- |
-| `mmseg/`, `configs/`, `tools/`, `projects/` | MMSegmentation package and project extensions |
-| `configs/dadou/`, `projects/dadou_teacher/`, `tools/dadou/` | Lesion teacher, independent leaf U-Net, probability export |
-| `tools/dadou_semantic/` | EfficientNet-B0, scene/duplicate exclusion, LayerCAM |
-| `paper_code/corrected_f_training/` | Corrected gate, continuous weights, G0/G1/calibration/frozen evaluation |
-| `paper_code/step9_student_training/` | Student model and shared training utilities |
-| `paper_code/ablation_abdec/` | Supervised A and ablations |
-| `paper_code/strong_ssl_baselines/` | Protocol-aligned UniMatch, ST++ and U²PL adaptations |
-| `paper_code/submission_supplement_experiments/` | Five seeds, label-fraction curves, confidence intervals and integrity audits |
-| `paper_code/external_test/`, `paper_code/external_validation/` | External-data preparation and evaluation, including explicitly marked exploratory variants |
+## Downloads
 
-## Data split and validation
+- [Model and inference source v1.2.0](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/v1.2.0).
+- [Soybean lesion segmentation dataset](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-v2.0.0): 1,567 original images, including 172 pixel-annotated images.
+- [Soybean original image/mask pairs](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-original-pairs-v2.0.0): 617 pairs.
+- [MH-SoyaHealthVision subset](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0).
 
-Configure your own train/validation/test splits and update the data paths and split-size checks for your data.
+Dataset layouts and label encoding are described in [PAPER_DATA.md](docs/PAPER_DATA.md).
 
-Final G and the baselines share the student architecture and data split. Final G uses more total training updates across its multi-stage chain; do not describe the full comparison as equal total training compute. The strong baselines are independent **protocol-aligned adaptations**, not exact reproductions of the original VOC/Cityscapes headline results.
+## License
 
-This source release has syntax, configuration, synthetic gating, model-forward and file-inclusion checks. The separate Soybean dataset downloads contain original images and annotations without fixed splits; model checkpoints must be obtained by training. Numerical reproduction also depends on the documented software and training environment.
-
-## Attribution and citation
-
-Retain the [Apache-2.0 license](LICENSE) and [MMSegmentation citation](CITATION.cff). MMSegmentation is developed by OpenMMLab and its contributors. The soybean project extensions and paper-specific scripts are identified above. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for method sources and pinned reference commits. Paper authors, DOI and final publication metadata have not been invented; add those when finalized.
-
-To cite this code in a manuscript, use the public repository URL and the exact Git commit or release tag, in addition to the published paper and upstream software/method references.
+Retain the [Apache-2.0 license](LICENSE), [MMSegmentation citation](CITATION.cff) and [third-party notices](THIRD_PARTY_NOTICES.md).
