@@ -18,4 +18,4 @@ The official repositories are not bundled. Use the official project citations al
 
 ## Data and checkpoints
 
-Public datasets retain their original terms; locally obtained images may have different redistribution rights. No dataset, annotation, sample-level manifest, pretrained model or trained checkpoint is redistributed by this code-only repository.
+Dataset files retain their respective rights and notices. The Git source tree and code archive do not include datasets or checkpoints. Separate dataset release assets provide images, annotations and split manifests with their own package notices; the software's Apache-2.0 license is not automatically applied to those files.

@@ -2,7 +2,14 @@
 
 本仓库用于公开论文实验代码，包含本项目使用的完整 MMSegmentation 1.2.2 Python 源码、配置、教师/叶片/病种语义模型、三张基础图、修正版三态门控、连续像素权重、学生蒸馏、消融及强半监督基线。
 
-数据集、图像、标注、逐样本清单、模型权重、训练结果及论文文件均未包含。`data/`、`work_dirs/` 等目录由使用者在本地准备或运行生成，并已加入 `.gitignore`。
+图像、标注和划分清单作为独立的数据集发布包提供，不放入 Git 源码历史。模型权重、训练结果及论文文件未包含。`data/`、`work_dirs/` 等本地目录已加入 `.gitignore`。
+
+## 数据集下载
+
+- [Dadou 实验数据集 v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-dadou-v1.0.0)：精标数据、弱标签图像、人工标注、固定划分及已使用的伪标签训练数据。下载全部 5 个 ZIP 分卷，按发布页说明合并后解压。
+- [MH-SoyaHealthVision 实验子集 v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0)：80 张人工像素标注测试图像和 80 张独立无标注适配图像。
+
+包内附掩码、相对路径清单、使用说明和校验信息；数据文件的权利说明与软件许可证分别保留。
 
 ## 复现入口
 

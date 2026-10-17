@@ -1,6 +1,8 @@
-# Data contracts (no dataset is included)
+# Data contracts (datasets available separately)
 
 Keep all local data under the ignored `data/` directory. File paths in generated manifests must point to your own machine. Existing manifests from another machine generally need regeneration.
+
+The experiment datasets are available as separate [release downloads](../README.md#dataset-downloads), not Git source files. Each dataset package includes `prepare_paths.py` to restore its manifests and prepared layout on your machine.
 
 ## Pixel-labeled segmentation data
 

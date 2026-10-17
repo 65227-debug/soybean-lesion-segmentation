@@ -1,6 +1,6 @@
 # Final G reproduction
 
-Run from the repository root after following `PAPER_INSTALLATION.md` and `PAPER_DATA.md`. Original data and trained checkpoints are not included. The following are command recipes, not commands that have been rerun to build this code release.
+Run from the repository root after following `PAPER_INSTALLATION.md` and `PAPER_DATA.md`. Download the experiment datasets separately using the links in the README; trained checkpoints are not included. The following are command recipes, not commands that have been rerun to build this code release.
 
 ## 1. Teacher, independent leaf model, independent semantic model
 

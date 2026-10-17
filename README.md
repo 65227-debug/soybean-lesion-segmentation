@@ -2,9 +2,16 @@
 
 Research code for **semi-supervised soybean lesion segmentation with leaf spatial constraints and disease-semantic soft evidence**.
 
-This repository contains the complete local MMSegmentation **1.2.2 Python package**, model configurations, custom dataset/metric hooks, and experiment scripts. Datasets, annotations, dataset manifests, model weights, training outputs, and paper drafts are not distributed. Provide your own permitted data and obtain the referenced pretrained weights separately.
+This repository contains the complete local MMSegmentation **1.2.2 Python package**, model configurations, custom dataset/metric hooks, and experiment scripts. Dataset images, annotations and manifests are provided separately as release assets, not stored in the Git source tree. Model weights, training outputs and paper drafts are not included. Obtain the referenced pretrained weights separately.
 
 中文说明见 [README_zh-CN.md](README_zh-CN.md).
+
+## Dataset downloads
+
+- [Dadou experiment dataset v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-dadou-v1.0.0): supervised data, weakly labeled inputs, annotations, fixed splits and prepared pseudo-label training data. Download all five numbered ZIP parts and join them as described on the release page.
+- [MH-SoyaHealthVision experiment subset v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0): 80 manually annotated test images and 80 disjoint unlabeled adaptation images.
+
+Each package includes masks, relative-path manifests, preparation instructions and checksums. Dataset rights are described in the package notices separately from the software license.
 
 ## Models and labels
 
@@ -46,7 +53,7 @@ The study used 108 labeled training, 27 validation, 37 internal-test and 1,390 w
 
 Final G and the baselines share the student architecture and data split. Final G uses more total training updates across its multi-stage chain; do not describe the full comparison as equal total training compute. The strong baselines are independent **protocol-aligned adaptations**, not exact reproductions of the original VOC/Cityscapes headline results.
 
-This code-only release has syntax, configuration, synthetic gating, model-forward and file-inclusion checks. It does not redistribute the original private data, so exact numerical reproduction requires the original authorized splits and checkpoints produced by training.
+This source release has syntax, configuration, synthetic gating, model-forward and file-inclusion checks. The separate dataset downloads provide the experimental inputs and fixed splits; model checkpoints must be obtained by training. Numerical reproduction also depends on the documented software and training environment.
 
 ## Attribution and citation
 
