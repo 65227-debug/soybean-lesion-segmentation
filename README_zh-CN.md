@@ -6,10 +6,11 @@
 
 ## 数据集下载
 
+- [Original 原图与掩码 v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-original-images-masks-v1.0.0)：仅含 `img_dir` 和 `ann_dir` 中的617对 `_original` 原图与掩码，保留原有509/54/54划分。
 - [Dadou 实验数据集 v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-dadou-v1.0.0)：精标数据、弱标签图像、人工标注、固定划分及已使用的伪标签训练数据。下载全部 5 个 ZIP 分卷，按发布页说明合并后解压。
 - [MH-SoyaHealthVision 实验子集 v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0)：80 张人工像素标注测试图像和 80 张独立无标注适配图像。
 
-包内附掩码、相对路径清单、使用说明和校验信息；数据文件的权利说明与软件许可证分别保留。
+Original 包仅含原图和掩码，另附校验文件；实验数据包还含相对路径清单和使用说明。数据文件不自动适用软件许可证。
 
 ## 复现入口
 

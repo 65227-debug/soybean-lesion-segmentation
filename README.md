@@ -8,10 +8,11 @@ This repository contains the complete local MMSegmentation **1.2.2 Python packag
 
 ## Dataset downloads
 
+- [Original image and mask pairs v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-original-images-masks-v1.0.0): 617 pairs, containing only `_original` images and masks from `img_dir` and `ann_dir`, with their existing 509/54/54 splits.
 - [Dadou experiment dataset v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-dadou-v1.0.0): supervised data, weakly labeled inputs, annotations, fixed splits and prepared pseudo-label training data. Download all five numbered ZIP parts and join them as described on the release page.
 - [MH-SoyaHealthVision experiment subset v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0): 80 manually annotated test images and 80 disjoint unlabeled adaptation images.
 
-Each package includes masks, relative-path manifests, preparation instructions and checksums. Dataset rights are described in the package notices separately from the software license.
+The original-pairs package contains only images and masks, with a separate checksum. The experiment packages also include relative-path manifests and preparation instructions. Dataset files do not automatically inherit the software license.
 
 ## Models and labels
 
