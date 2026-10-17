@@ -47,9 +47,9 @@ The paper's final G chain is **A supervised student → G0 corrected gate traini
 | `paper_code/submission_supplement_experiments/` | Five seeds, label-fraction curves, confidence intervals and integrity audits |
 | `paper_code/external_test/`, `paper_code/external_validation/` | External-data preparation and evaluation, including explicitly marked exploratory variants |
 
-## Validation and interpretation
+## Data split and validation
 
-The current manuscript uses 108 labeled training, 36 validation and 36 internal-test images. It reports final G at 85.57±0.63% mIoU, an improvement of 1.65 percentage points over ST++.
+The dataset split is 108 labeled training, 36 validation and 36 internal-test images.
 
 Final G and the baselines share the student architecture and data split. Final G uses more total training updates across its multi-stage chain; do not describe the full comparison as equal total training compute. The strong baselines are independent **protocol-aligned adaptations**, not exact reproductions of the original VOC/Cityscapes headline results.
 

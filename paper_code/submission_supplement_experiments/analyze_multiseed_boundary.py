@@ -59,8 +59,8 @@ def paired_ci(values):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     manifest = read_csv(ROOT / "data/dadou_student/supervised_test_manifest.csv")
-    if len(manifest) != 37:
-        raise RuntimeError(f"Expected 37 test images, found {len(manifest)}")
+    if len(manifest) != 36:
+        raise RuntimeError(f"Expected 36 test images, found {len(manifest)}")
     rows = []
     for seed in SEEDS:
         for method in ("G", "ST++"):

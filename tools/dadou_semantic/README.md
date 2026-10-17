@@ -32,5 +32,5 @@ LayerCAM uses EfficientNet feature stages 3, 5, and 8. Each response is
 independently normalized, resized, and averaged. The saved 16-bit maps follow
 `response = uint16_pixel / 65535.0`.
 
-Only the 24-image exact validation split is evaluated. The exact test manifest
+Only the exact validation split is evaluated. The exact test manifest
 is retained for provenance but is not linked, loaded, or evaluated.

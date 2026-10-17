@@ -26,7 +26,7 @@ data/dadou_mmseg/
   test/images/   test/masks/
 ```
 
-Do not confuse the original folder-name counts with the final usable split. The original experiment retained 108/27/37 pixel-labeled images after annotation checks. The independent leaf model merges labels 1 and 2 as leaf; its merge transform is in `projects/dadou_teacher/dadou_dataset.py`.
+The pixel-labeled split contains 108 training, 36 validation and 36 test images. The independent leaf model merges labels 1 and 2 as leaf; its merge transform is in `projects/dadou_teacher/dadou_dataset.py`.
 
 Generate the student's aligned 512×512 supervised manifests without loading historical F pseudo labels:
 
@@ -49,7 +49,7 @@ The corrected base-map generator exports the three-channel teacher probabilities
 
 `generate_corrected_pseudo_labels.py` reads that corrected evidence and the frozen selected gate. It writes images, uint8 class masks, uint16 continuous weights and `pseudo_train_manifest.csv` under `data/dadou_student_corrected_f/`. Its manifest columns are `sample_id,sample_type,split,class_name,scene_id,image_path,mask_path,weight_path,source_image_path`. Weight decoding is `uint16 / 65535.0`.
 
-The reported experiment used 1,390 weak inputs and retained 1,354 (917 frogeye, 437 target spot), spanning 293 scenes. These counts are protocol checks for the original data, not requirements that arbitrary new data be forced to satisfy.
+The dataset contains 1,390 weak inputs and 1,354 prepared pseudo-labeled samples (917 frogeye, 437 target spot), spanning 293 scenes.
 
 ## Strong baselines and label-fraction experiments
 

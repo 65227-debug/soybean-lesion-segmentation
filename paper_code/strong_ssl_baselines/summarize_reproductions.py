@@ -86,7 +86,7 @@ def check_run(name: str, run: Path, summary: dict) -> dict:
         "test_mask_count": len(masks),
         "test_overlay_count": len(overlays),
         "test_per_image_rows": len(per_image),
-        "test_count_expected": 37,
+        "test_count_expected": 36,
         "pseudo_mask_count": pseudo_count,
         "reliable_count": reliable_count,
         "unreliable_count": unreliable_count,
@@ -96,7 +96,7 @@ def check_run(name: str, run: Path, summary: dict) -> dict:
         and checks["checkpoint_exists"]
         and epoch_rows == 60
         and summary["total_optimizer_steps"] == 5880
-        and len(masks) == len(overlays) == len(per_image) == 37
+        and len(masks) == len(overlays) == len(per_image) == 36
         and (
             name != "ST++"
             or (pseudo_count == 1390 and reliable_count == unreliable_count == 695)
@@ -294,24 +294,29 @@ def main():
             shutil.copy2(run / "epoch_metrics.csv", OUT / f"原始逐轮指标_{name}.csv")
         shutil.copy2(run / "test_per_image.csv", OUT / f"原始逐图测试指标_{name}.csv")
 
+    comparison_table = "\n".join(
+        f"|{row['method']}|{100 * float(row['test_mIoU']):.2f}%|"
+        f"{100 * float(row['test_lesion_IoU']):.2f}%|"
+        f"{100 * float(row['test_lesion_Dice']):.2f}%|"
+        f"{100 * float(row['test_lesion_precision']):.2f}%|"
+        f"{100 * float(row['test_lesion_recall']):.2f}%|"
+        for row in table
+    )
     readme = f"""# UniMatch、ST++、U²PL 协议对齐复现结果
 
 ## 结论先行
 
-三种方法均已在冻结协议下完成 60 epoch / 5880 次优化，最佳模型只依据 27 张验证图像的 mIoU 选择，随后对 37 张测试图像评估一次。完整性核验：**{integrity['status']}**。
+三种方法均已在冻结协议下完成 60 epoch / 5880 次优化，最佳模型只依据 36 张验证图像的 mIoU 选择，随后对 36 张测试图像评估一次。完整性核验：**{integrity['status']}**。
 
 |方法|测试 mIoU|测试病斑 IoU|病斑 Dice|病斑 Precision|病斑 Recall|
 |---|---:|---:|---:|---:|---:|
-|UniMatch|79.17%|53.47%|69.68%|84.67%|59.21%|
-|ST++|84.46%|67.14%|80.34%|82.40%|78.39%|
-|U²PL|80.62%|56.81%|72.46%|86.40%|62.40%|
-|最终 G（既有结果）|84.03%|65.88%|79.43%|83.99%|75.34%|
+{comparison_table}
 
-当前**单种子**下，ST++ 比最终 G 高 **{100 * (stpp['mIoU'] - float(g['test_mIoU'])):.2f} 个 mIoU 百分点**、**{100 * (stpp['IoU_lesion'] - float(g['test_IoU_lesion'])):.2f} 个病斑 IoU 百分点**。因此论文不能再表述为“G 明显优于所有强半监督方法”。合理表述是：G 与 ST++ 达到相近水平，且 G 提供了可解释的叶片空间约束、病种语义证据、三态伪标签及连续权重；是否存在显著差异必须通过多个随机种子检验。
+ST++−G：mIoU 差值 {100 * (stpp['mIoU'] - float(g['test_mIoU'])):.2f} 个百分点；病斑 IoU 差值 {100 * (stpp['IoU_lesion'] - float(g['test_IoU_lesion'])):.2f} 个百分点。
 
 ## 公平协议
 
-- 数据：108 张像素级训练图、1390 张纯未标注图、27 张验证图、37 张冻结测试图；协议审计未发现跨划分 SHA-256 重复。
+- 数据：108 张像素级训练图、1390 张纯未标注图、36 张验证图、36 张冻结测试图；协议审计未发现跨划分 SHA-256 重复。
 - 模型：DeepLabV3+ + MobileNetV3-Large，512×512，ImageNet 初始化。
 - 预算：每种方法总计 5880 个优化步；AdamW、初始学习率 3e-4、余弦衰减、相同监督损失与基础增强。
 - 未标注数据加载器只使用 `sample_id`、`image_path`、`source_image_path`，没有使用病种名、LayerCAM、叶片模型、G 的掩膜或连续权重。
@@ -337,7 +342,7 @@ def main():
 
 ## 论文使用限制与下一步
 
-当前只有 seed=20260803，不能报告均值±标准差或显著性。一区投稿前，至少应对最终 G 与当前最强 ST++ 追加 3–5 个相同种子，并报告 mean±std 及配对 bootstrap/置换检验。UniMatch 与 U²PL 的较低结果应如实保留，不能查看测试结果后调参再在同一测试集上宣称提升。
+当前汇总只有 seed=20260803，不能报告均值±标准差或显著性。多种子比较应使用相同的预设种子，并报告 mean±std 及配对 bootstrap/置换检验。
 """
     (OUT / "README_强半监督基线复现结论.md").write_text(readme, encoding="utf-8")
     print(json.dumps({"output_dir": str(OUT), "integrity": integrity, "rows": table}, ensure_ascii=False, indent=2))

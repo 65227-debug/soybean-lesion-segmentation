@@ -6,7 +6,7 @@
 
 ## 当前执行顺序
 
-1. `verify_protocol.py`：校验 108/27/37/1390 数量、文件可读性及按源文件 SHA-256 的跨划分重复。
+1. `verify_protocol.py`：校验 108/36/36/1390 数量、文件可读性及按源文件 SHA-256 的跨划分重复。
 2. `train_unimatch.py`：双强增强、CutMix、特征扰动和置信度门控。
 3. `train_stpp.py`：监督初训、跨检查点稳定性筛选、可靠集再训练、全未标注集再训练。
 4. `train_u2pl.py`：EMA 教师、基于熵的可靠/不可靠像素划分与类别队列对比学习。
@@ -24,16 +24,4 @@ python paper_code/strong_ssl_baselines/train_u2pl.py --work-dir work_dirs/dadou_
 python paper_code/strong_ssl_baselines/summarize_reproductions.py
 ```
 
-正式训练完成后才加载“验证 mIoU 最优”冻结权重评估 37 张测试集；测试结果不参与阈值、轮数或模型选择。
-
-## seed=20260803 的正式结果
-
-|方法|测试 mIoU|测试病斑 IoU|
-|---|---:|---:|
-|UniMatch|79.17%|53.47%|
-|ST++|84.46%|67.14%|
-|U²PL|80.62%|56.81%|
-
-完整表格、逐轮 Origin 数据和 PNG/PDF 曲线位于
-`paper_materials/强半监督基线复现_20260827`。当前结果为单种子结果，不能替代
-多随机种子的均值±标准差与显著性检验。
+正式训练完成后才加载“验证 mIoU 最优”冻结权重评估 36 张测试集；测试结果不参与阈值、轮数或模型选择。

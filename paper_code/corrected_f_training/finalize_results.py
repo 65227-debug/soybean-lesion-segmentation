@@ -189,14 +189,14 @@ def main():
             f"{100*row['test_Precision_lesion']:.2f}%|"
             f"{100*row['test_Recall_lesion']:.2f}%|")
     lines.extend([
-        '', '## 可以写进论文的客观结论', '',
-        f"G组测试mIoU为{100*final['test_mIoU']:.2f}%，比原mIoU最高的"
+        '', '## 指标比较', '',
+        f"G组测试mIoU为{100*final['test_mIoU']:.2f}%，与原mIoU最高的"
         f"{best_old_miou['group']}组（{100*best_old_miou['test_mIoU']:.2f}%）"
-        f"提高{100*(final['test_mIoU']-best_old_miou['test_mIoU']):.2f}个百分点。",
-        f"G组病斑IoU为{100*final['test_IoU_lesion']:.2f}%，比原F组提高"
+        f"的差值（G减该组）为{100*(final['test_mIoU']-best_old_miou['test_mIoU']):.2f}个百分点。",
+        f"G组病斑IoU为{100*final['test_IoU_lesion']:.2f}%，与原F组的差值（G减F）为"
         f"{100*(final['test_IoU_lesion']-rows[5]['test_IoU_lesion']):.2f}个百分点；"
-        f"但仍比病斑IoU最高的{best_old_lesion['group']}组低"
-        f"{100*(best_old_lesion['test_IoU_lesion']-final['test_IoU_lesion']):.2f}个百分点。",
+        f"与原病斑IoU最高的{best_old_lesion['group']}组的差值（G减该组）为"
+        f"{100*(final['test_IoU_lesion']-best_old_lesion['test_IoU_lesion']):.2f}个百分点。",
         f"G组在验证集选择的mIoU为"
         f"{100*calibration['selected']['metrics']['mIoU']:.2f}%，"
         '测试集只在权重与类别偏置冻结后评估一次。',
@@ -204,9 +204,8 @@ def main():
         'G组最终仍为单个DeepLabV3+ + MobileNetV3-Large，类别偏置已折叠进分类头，'
         '不增加参数量和推理次数。训练中使用A与修正版F的软预测作为蒸馏教师，'
         '推理时不需要双模型。',
-        'G相对A–F同时加入了修正门控、软蒸馏和验证集校准，因此当前结果能支持'
-        '“最终G整体mIoU更高”，不能单独归因于某一个模块。若论文要证明各组件贡献，'
-        '还需补做“修正门控→蒸馏→校准”的逐项消融，并建议至少3个随机种子报告均值±标准差。',
+        'G相对A–F包含修正门控、软蒸馏和验证集校准；各组件贡献应通过'
+        '“修正门控→蒸馏→校准”的逐项消融和相同预设种子的比较计算。',
     ])
     (OUTPUT_DIR / '论文结果说明.md').write_text(
         '\n'.join(lines) + '\n', encoding='utf-8')

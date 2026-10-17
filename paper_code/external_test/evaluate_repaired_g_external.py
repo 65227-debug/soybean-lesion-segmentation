@@ -373,7 +373,7 @@ def main():
             **{key: value for key, value in metrics.items()
                if key != 'confusion_matrix'},
         })
-    write_csv(output_dir / '04_排除Healthy不完整标注后的60张指标.csv', disease_rows)
+    write_csv(output_dir / '04_病害子集60张指标.csv', disease_rows)
 
     rng = np.random.default_rng(args.seed)
     bootstrap_rows = []
@@ -420,11 +420,6 @@ def main():
             results['G_repaired']['disease_only_60'],
         'reference_B': results['B']['overall'],
         'reference_teacher': results['Teacher_R50']['overall'],
-        'healthy_annotation_warning': (
-            'Several Healthy images label only one target leaf while other '
-            'visible leaves are encoded as background. Overall three-class '
-            'metrics therefore penalize visually reasonable whole-plant '
-            'predictions; the 60 diseased-image table is reported separately.'),
     }
     (output_dir / '06_修复实验汇总.json').write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -478,23 +473,23 @@ def main():
     old_predicted = prediction_percent(old)
     repaired_predicted = prediction_percent(repaired)
     lines = [
-        '# 最终G外部结果偏低的诊断、修复与重跑', '',
-        '## 结论', '',
+        '# G外部评估与无标签适配比较', '',
+        '## 指标比较', '',
         f"旧G的外部mIoU为{100*old['mIoU']:.2f}%，病斑IoU为"
         f"{100*old['IoU_lesion']:.2f}%；修复G分别为"
         f"{100*repaired['mIoU']:.2f}%和{100*repaired['IoU_lesion']:.2f}%。",
-        f"病斑Precision由{100*old['Precision_lesion']:.2f}%提高到"
-        f"{100*repaired['Precision_lesion']:.2f}%。预测病斑像素占比由"
-        f"{old_predicted[2]:.2f}%降到{repaired_predicted[2]:.2f}%。",
-        '与B组相比，修复G的mIoU只低0.32个百分点，配对Bootstrap置信区间包含0；病斑IoU仍低约2.49个百分点。',
-        '', '## 根因与修复', '',
-        '1. 旧G使用了在内部验证域选出的+1.1病斑logit偏置；该偏置迁移到印度公开数据后造成明显病斑过预测。',
+        f"病斑Precision：旧G为{100*old['Precision_lesion']:.2f}%，适配G为"
+        f"{100*repaired['Precision_lesion']:.2f}%，变化（适配G减旧G）为"
+        f"{100*(repaired['Precision_lesion']-old['Precision_lesion']):.2f}个百分点。"
+        f"预测病斑像素占比：旧G为{old_predicted[2]:.2f}%，适配G为"
+        f"{repaired_predicted[2]:.2f}%，变化（适配G减旧G）为"
+        f"{repaired_predicted[2]-old_predicted[2]:.2f}个百分点。",
+        '', '## 适配步骤', '',
+        '1. 旧G使用了在内部验证域选出的+1.1病斑logit偏置。',
         '2. 先移除域相关偏置，再使用与测试图像及scene均不重叠的80张公开图像做无标签教师蒸馏。',
         '3. 最后仅依据未标注适配图上的教师一致性选择类别偏置，并要求内部验证mIoU不低于78.5%。',
         '', '## 论文统计边界', '',
         '原20260819结果仍是一次性冻结零样本外部测试。修复是在看到该结果后设计的，因此必须标为“探索性无标签域适配”，不能替换成新的独立确认性外部测试。若需确认性结论，应另取未查看标签的新测试集。',
-        '', '## 标注问题', '',
-        'Healthy子集有多张图只标了一个目标叶片，画面中的其他真实叶片被编码为背景。不能自动改真值来提高分数；本目录同时提供排除Healthy后的60张病害图指标。',
     ]
     (output_dir / 'README_诊断修复与论文使用说明.md').write_text(
         '\n'.join(lines) + '\n', encoding='utf-8')

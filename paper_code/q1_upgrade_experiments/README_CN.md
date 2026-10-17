@@ -4,7 +4,7 @@
 
 ## 脚本
 
-- `analyze_severity_boundary.py`：在固定 37 张内部测试集上计算 A--G 的连续严重度、Bland--Altman、一致性指标、病斑边界指标和分尺度连通域召回。
+- `analyze_severity_boundary.py`：在固定 36 张内部测试集上计算 A--G 的连续严重度、Bland--Altman、一致性指标、病斑边界指标和分尺度连通域召回。
 - `plot_pseudo_quality_tradeoff.py`：把既有 20 张验证图门控网格绘制成 Precision--Recall、覆盖率--F1 和阈值敏感性图；不会改动已选阈值。
 - `benchmark_efficiency.py`：在同一 RTX 5090 D v2、batch size 1、512×512、AMP FP16 条件下统一测教师与最终 G 的参数量、FLOPs、延迟、FPS、checkpoint 大小和峰值显存。
 - `analyze_incremental_stages.py`：复用验证集冻结的 F、G0、G1 和 G2（最终 G）权重，补“严格门控→连续门控→蒸馏→校准”逐项消融及逐图配对 Bootstrap。

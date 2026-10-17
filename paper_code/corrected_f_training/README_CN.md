@@ -24,22 +24,10 @@
 
 `train_distilled_student.py` 用双证据有效区域上的软目标把上述互补信息蒸馏回
 单个 DeepLabV3+--MobileNetV3 学生，训练过程不读取测试集。
-`distillation_v2_config.json` 进一步修复弱标签不含RAB造成的病种偏移：
-RAB精标过采样、弱图按病种/场景均衡、门控外病斑边界低权重蒸馏，
+`distillation_v2_config.json` 使用RAB精标过采样、弱图按病种/场景均衡、门控外病斑边界低权重蒸馏，
 并使用偏召回的病斑Tversky项。
 `strong_teacher_distillation_config.json` 直接使用已训练的
-DeepLabV3+--ResNet50强分割教师提供软边界，同时在RAB精标图上蒸馏，
-避免弱图池缺少RAB时学生遗忘该病种。
-
-最终推荐的开发权重有两个：
-
-- `work_dirs/dadou_corrected_G3_recall_balanced/best_calibrated_student.pth`：
-  病斑优先，验证mIoU不低于80.33%的前提下最大化病斑召回；
-- `work_dirs/dadou_corrected_G4_calibrated/best_calibrated_student.pth`：
-  总体mIoU优先的单模型权重融合。
-
-原因、逐病种分析和不能重复使用旧测试集的说明见
-`work_dirs/dadou_corrected_G_diagnosis/论文诊断与修正说明.md`。
+DeepLabV3+--ResNet50强分割教师提供软边界，同时在RAB精标图上蒸馏。
 
 `evaluate_frozen_student.py` 只用于验证集选定并冻结权重后的单次测试评估，
 保存总体指标、逐图指标、预测掩膜和叠加图。

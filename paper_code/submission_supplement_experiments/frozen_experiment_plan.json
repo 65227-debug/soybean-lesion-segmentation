@@ -7,8 +7,8 @@
   "target_completed_seeds": 5,
   "fixed_internal_splits": {
     "labeled_train": 108,
-    "validation": 27,
-    "test": 37,
+    "validation": 36,
+    "test": 36,
     "weak_pool": 1390
   },
   "architecture": "DeepLabV3+ MobileNetV3-Large",

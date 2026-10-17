@@ -393,8 +393,8 @@ def main() -> None:
     output_dir = (root / args.output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     manifest = read_csv(root / "data/dadou_student/supervised_test_manifest.csv")
-    if len(manifest) != 37:
-        raise ValueError(f"Expected 37 frozen test images, found {len(manifest)}")
+    if len(manifest) != 36:
+        raise ValueError(f"Expected 36 frozen test images, found {len(manifest)}")
     prediction_dirs = {
         **{
             name: root / f"work_dirs/dadou_ablation_comparison/predictions/{name}/masks"

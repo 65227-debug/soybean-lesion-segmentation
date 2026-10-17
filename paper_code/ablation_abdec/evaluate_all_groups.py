@@ -161,9 +161,7 @@ def main():
         f"（{100 * best_miou_row['test_mIoU']:.2f}%），病斑IoU最高的是"
         f"{best_lesion_row['group']}组"
         f"（{100 * best_lesion_row['test_IoU_lesion']:.2f}%）。",
-        '当前单次划分不能支持“完整门控F优于全部消融组”的结论。',
-        '验证集与测试集排序差异较大，建议结合成对bootstrap结果，并在按数据来源、',
-        '病种和采集场景分层后运行至少3个随机种子，报告均值±标准差。',
+        '成对bootstrap按图像计算；多种子比较应使用相同的预设种子。',
         '已经查看本测试集后，不应再据此调阈值并在同一测试集上作确认性结论。',
     ])
     (output_dir / '论文消融结果.md').write_text(

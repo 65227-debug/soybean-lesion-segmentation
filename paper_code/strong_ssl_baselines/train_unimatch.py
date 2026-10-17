@@ -217,7 +217,7 @@ def main():
         'seed': cfg['seed'],
         'labeled_train_images': len(labeled),
         'unlabeled_train_images': len(unlabeled),
-        'validation_images': 27,
+        'validation_images': len(common.read_rows(cfg['validation_manifest'])),
         'test_images': len(test_rows),
         'epochs_completed': cfg['max_epochs'],
         'steps_per_epoch': cfg['steps_per_epoch'],

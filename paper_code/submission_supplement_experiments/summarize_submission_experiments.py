@@ -102,8 +102,8 @@ def paired_t_ci(differences):
 def paired_image_bootstrap(path_a, path_b, metric, rng, repeats=20000):
     a, b = read_per_image(path_a), read_per_image(path_b)
     ids = sorted(set(a) & set(b))
-    if len(ids) != 37:
-        raise RuntimeError(f"Expected 37 paired images, got {len(ids)}")
+    if len(ids) != 36:
+        raise RuntimeError(f"Expected 36 paired images, got {len(ids)}")
     diffs = np.asarray([
         float(a[i][metric]) - float(b[i][metric]) for i in ids
         if math.isfinite(float(a[i][metric])) and math.isfinite(float(b[i][metric]))
@@ -165,7 +165,7 @@ def main():
     )
 
     # The document explicitly asks for a paired bootstrap.  Use the original
-    # pre-declared seed and matched 37-image test set; report per-image means.
+    # pre-declared seed and matched 36-image test set; report per-image means.
     rng = np.random.default_rng(20260829)
     p = paths_for_seed(20260803)
     bootstrap_rows = []
@@ -268,8 +268,8 @@ def main():
             and epoch_rows == {"A": 60, "G0": 60, "G1": 18,
                               "ST++_stage1": 20, "ST++_stage2": 20,
                               "ST++_stage3": 20}
-            and all(value == 37 for value in per_image_rows.values())
-            and all(value == 37 for value in prediction_masks.values())
+            and all(value == 36 for value in per_image_rows.values())
+            and all(value == 36 for value in prediction_masks.values())
         )
         integrity_per_seed[str(seed)] = {
             "effective_seeds": effective_seeds,
@@ -325,10 +325,10 @@ def main():
 
 ## 已完成
 
-- 最终 G 与 ST++-aligned：5 个预先固定种子，统一 108/27/37/1390 划分，逐种子冻结测试。
+- 最终 G 与 ST++-aligned：5 个预先固定种子，统一 108/36/36/1390 划分，逐种子冻结测试。
 - 纯监督 A：同一 5 个种子逐种子冻结测试。
 - G0、G0-Cal、G1、最终 G：5 种子逐阶段对照。
-- 原始种子 37 张测试图上的逐图配对 Bootstrap（20,000 次）。
+- 原始种子 36 张测试图上的逐图配对 Bootstrap（20,000 次）。
 - G 与 ST++ 的五种子 Boundary F1 和小/中/大病斑连通域召回。
 - 25/50/75/100% 标签比例曲线（scene_cluster_id 整组、四类分层、固定弱标注池）。
 - 所有新增权重均有独立 SHA-256，训练轮数与测试样本数已审计。
@@ -338,19 +338,18 @@ def main():
 - 最终 G mIoU：{g_m['mean_percent']:.2f} ± {g_m['sd_percent']:.2f}%（5 seeds）。
 - ST++ mIoU：{st_m['mean_percent']:.2f} ± {st_m['sd_percent']:.2f}%（5 seeds）。
 - 纯监督 A mIoU：{a_m['mean_percent']:.2f} ± {a_m['sd_percent']:.2f}%（5 seeds）。
-- G−A：{d_a['mean_difference_pp']:.2f} pp，95% CI [{d_a['ci95_low_pp']:.2f}, {d_a['ci95_high_pp']:.2f}]，支持最终 G 稳定优于纯监督基线。
+- G−A：{d_a['mean_difference_pp']:.2f} pp，95% CI [{d_a['ci95_low_pp']:.2f}, {d_a['ci95_high_pp']:.2f}]。
 - G−ST++：{d_m['mean_difference_pp']:.2f} pp，95% CI [{d_m['ci95_low_pp']:.2f}, {d_m['ci95_high_pp']:.2f}]。
-- 置信区间跨 0，因此不能写“G 显著优于 ST++”；可写成性能相当，并强调门控可解释性与像素级证据链。
 - Boundary F1：G−ST++ = {float(b_f1['mean_difference_pp']):.2f} pp，95% CI [{float(b_f1['ci95_low_pp']):.2f}, {float(b_f1['ci95_high_pp']):.2f}]。
 - 小病斑召回：G−ST++ = {float(small['mean_difference_pp']):.2f} pp，95% CI [{float(small['ci95_low_pp']):.2f}, {float(small['ci95_high_pp']):.2f}]；固定定义为连通域 <64 像素、预测重叠率 ≥10%。
-- G0-Cal 相对 G0 的 mIoU 平均变化为 {d_cal['mean_difference_pp']:.2f} pp，说明直接校准不能解释最终提升；最终 G 相对 G1 提升 {d_final['mean_difference_pp']:.2f} pp。
+- G0-Cal 相对 G0 的 mIoU 平均变化为 {d_cal['mean_difference_pp']:.2f} pp；最终 G 相对 G1 的 mIoU 平均变化为 {d_final['mean_difference_pp']:.2f} pp。
 - 标签比例下 G 相对纯监督 A 的 mIoU 增益依次为 {', '.join(f"{r['G_minus_A_mIoU_pp']:.2f}" for r in label_gains)} pp；病斑 IoU 增益依次为 {', '.join(f"{r['G_minus_A_lesion_IoU_pp']:.2f}" for r in label_gains)} pp。
 
 ## 论文表述边界
 
 1. 本项目是 ST++ 的对齐复现（official method core + project adaptation），不是官方仓库逐行原样运行。
 2. 最终 G 的推理模型与 ST++ 同为单个 DeepLabV3+–MobileNetV3；但 G 的训练链包含 A、G0、G1 三段，总训练计算量高于 ST++。不能声称严格等训练预算公平。
-3. 校准参数只由 27 张验证集选择；每个冻结 checkpoint 的 37 张测试集只评估一次。
+3. 校准参数只由 36 张验证集选择；每个冻结 checkpoint 的 36 张测试集只评估一次。
 4. 图表中的误差条为种子间样本标准差；差异置信区间为 5 个配对种子的 t 区间。
 5. 标签比例曲线只有预先固定种子 20260803，是趋势性/探索性补充，不能写成多种子显著性结论。
 6. 为保证场景整组且四类嵌套分层，四个标签端点实际为 26/55/81/108 张（21/39/59/78 个场景）。

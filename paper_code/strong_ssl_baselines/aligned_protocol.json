@@ -1,5 +1,11 @@
 {
   "protocol_name": "Dadou-SSL-108L-1390U-aligned-v1",
+  "split_sizes": {
+    "labeled_train": 108,
+    "validation": 36,
+    "test": 36,
+    "unlabeled": 1390
+  },
   "protocol_frozen_date": "2026-08-27",
   "seed": 20260803,
   "image_size": 512,
@@ -86,6 +92,6 @@
     "contrastive_loss_weight": 1.0
   },
   "model_selection": "validation mIoU only",
-  "test_policy": "load the validation-selected frozen checkpoint, then evaluate the 37-image test split without tuning",
+  "test_policy": "load the validation-selected frozen checkpoint, then evaluate the 36-image test split without tuning",
   "claim_scope": "protocol-aligned method reproduction on the soybean dataset; not an exact reproduction of the original VOC/Cityscapes headline numbers"
 }

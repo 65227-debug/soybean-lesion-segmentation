@@ -99,6 +99,15 @@ def main():
     for name, record in manifest["frozen_configs"].items():
         if hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != record["sha256"]:
             errors.append(f"Frozen config hash mismatch: {name}")
+    protocol = json.loads((ROOT / "paper_code/strong_ssl_baselines/aligned_protocol.json").read_text(encoding="utf-8"))
+    plan = json.loads((ROOT / "paper_code/submission_supplement_experiments/frozen_experiment_plan.json").read_text(encoding="utf-8"))
+    expected = {"labeled_train": 108, "validation": 36, "test": 36, "unlabeled": 1390}
+    if protocol.get("split_sizes") != expected:
+        errors.append("Aligned protocol split sizes must be 108/36/36/1390")
+    plan_expected = {**expected, "weak_pool": expected["unlabeled"]}
+    del plan_expected["unlabeled"]
+    if plan["fixed_internal_splits"] != plan_expected:
+        errors.append("Supplementary plan split sizes must match the aligned protocol")
     result = {
         "files_checked": file_count, "python_files_checked": python_count,
         "json_files_checked": json_count, "errors": errors,

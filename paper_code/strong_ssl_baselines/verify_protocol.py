@@ -56,7 +56,8 @@ def main():
         'unlabeled': cfg['unlabeled_manifest'],
     }
     rows = {name: read_rows(path) for name, path in manifests.items()}
-    expected = {'labeled_train': 108, 'validation': 27, 'test': 37, 'unlabeled': 1390}
+    expected = cfg.get('split_sizes', {
+        'labeled_train': 108, 'validation': 36, 'test': 36, 'unlabeled': 1390})
     problems = []
     details = {}
     split_hashes = {}

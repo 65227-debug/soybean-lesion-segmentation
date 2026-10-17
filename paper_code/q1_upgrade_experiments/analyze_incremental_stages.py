@@ -101,8 +101,8 @@ def main() -> None:
         rows.append(row)
         previous = payload
         stage_rows = read_csv(source["per_image"])
-        if len(stage_rows) != 37:
-            raise ValueError(f"{source['stage']} expected 37 test rows, found {len(stage_rows)}")
+        if len(stage_rows) != 36:
+            raise ValueError(f"{source['stage']} expected 36 test rows, found {len(stage_rows)}")
         per_image[source["stage"]] = {row["sample_id"]: row for row in stage_rows}
 
     comparisons = []
@@ -110,7 +110,7 @@ def main() -> None:
     for first, second in zip(stage_sources[:-1], stage_sources[1:]):
         first_stage, second_stage = first["stage"], second["stage"]
         ids = sorted(set(per_image[first_stage]) & set(per_image[second_stage]))
-        if len(ids) != 37:
+        if len(ids) != 36:
             raise ValueError(f"Unaligned stage pair {first_stage}->{second_stage}: {len(ids)}")
         for metric in ("mIoU", "IoU_lesion"):
             valid_ids = [
@@ -166,7 +166,7 @@ def main() -> None:
 
     summary = {
         "protocol": {
-            "split": "same frozen 37-image internal test",
+            "split": "same frozen 36-image internal test",
             "all_checkpoints_selected_on": "validation only",
             "retraining_for_this_analysis": False,
             "new_test_evaluation": "G1 distilled checkpoint only; one evaluation after validation selection",

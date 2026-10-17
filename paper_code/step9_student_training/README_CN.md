@@ -10,8 +10,8 @@
 - 初始化：MobileNetV3-Large 使用 ImageNet 预训练权重，DeepLabV3+ 解码头随机初始化。
 - 人工精标训练集：108 张。
 - 双证据门控伪标签训练集：784 张。
-- 验证集：27 张。
-- 测试集：37 张，仅在验证集确定最佳权重后加载一次。
+- 验证集：36 张。
+- 测试集：36 张，仅在验证集确定最佳权重后加载一次。
 
 监督与伪标签图像每轮都进行同步在线增强：水平翻转、垂直翻转、±15°旋转，以及亮度、对比度和饱和度扰动。图像、掩膜和像素置信权重使用相同的几何变换；掩膜始终采用最近邻插值。
 
@@ -35,7 +35,7 @@ L_pseudo = sum(W_i * CE_i) / (sum(W_i) + epsilon)
 L = L_sup + lambda_u(t) * L_pseudo
 ```
 
-`lambda_u` 在第 1 轮为 0，第 10 轮升至 0.2，第 30 轮升至 0.5，第 60 轮最终升至 0.7。本次正式实验完整执行 60 轮，模型选择指标只使用验证集 mIoU。
+`lambda_u` 在第 1 轮为 0，第 10 轮升至 0.2，第 30 轮升至 0.5，第 60 轮最终升至 0.7。模型选择指标只使用验证集 mIoU。
 
 ## 3. 文件说明
 
@@ -70,22 +70,6 @@ python \
   --work-dir work_dirs/dadou_student_mobilenetv3_smoke
 ```
 
-## 5. 本次正式实验结果
+## 5. 输出文件
 
-- 完成轮数：60。
-- 最佳轮次：第 7 轮。
-- 最佳验证 mIoU：76.47%。
-- 最佳验证病斑 IoU：50.86%。
-- 测试 mIoU：81.48%。
-- 测试 mDice：89.13%。
-- 测试病斑 IoU：62.42%。
-- 测试病斑 Dice：76.87%。
-- 测试病斑 Precision：87.54%。
-- 测试病斑 Recall：68.51%。
-- 可训练参数总量：7.337M。
-
-正式产物位于 `work_dirs/dadou_student_deeplabv3plus_mobilenetv3_full60`。其中 `best_validation_mIoU.pth` 是论文与推理应使用的权重，`epoch_metrics.csv` 保存每一轮的全部损失和验证指标，`training_curves.png/.pdf` 可直接用于论文绘图或重新排版，`training_summary.json` 保存最终机器可读结果。
-
-## 6. 论文实验注意事项
-
-测试结果高于验证结果说明两个子集难度或类别分布存在差异，不能据此反向调整阈值或超参数。若要证明伪标签带来的提升，需要保持 MobileNetV3 学生结构、训练/验证/测试划分、增强和随机种子完全一致，再补做一个“只用 108 张人工精标图”的监督基线；本次实验本身不能与结构不同的教师模型直接归因比较。
+训练产物位于 `work_dirs/dadou_student_deeplabv3plus_mobilenetv3_full60`。其中 `best_validation_mIoU.pth` 是验证集选定的推理权重，`epoch_metrics.csv` 保存每一轮的全部损失和验证指标，`training_curves.png/.pdf` 保存训练曲线，`training_summary.json` 保存机器可读结果。

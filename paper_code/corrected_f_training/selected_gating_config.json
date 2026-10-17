@@ -22,34 +22,17 @@
       "healthy": 0.97,
       "background": 0.995
     },
-    "constraints_met": {
-      "lesion": true,
-      "healthy": true,
-      "background": true
-    },
     "selected_lesion": {
       "lesion_teacher_threshold": 0.85,
-      "lesion_semantic_threshold": 0.0,
-      "precision": 0.9073688689105321,
-      "recall": 0.5200460133269014,
-      "f1": 0.6611582501566934,
-      "accepted_pixels": 108117
+      "lesion_semantic_threshold": 0.0
     },
     "selected_healthy": {
       "healthy_teacher_threshold": 0.6,
-      "lesion_negative_threshold": 0.2,
-      "precision": 0.9833286121420108,
-      "recall": 0.8989855376781543,
-      "f1": 0.9392674450067279,
-      "accepted_pixels": 2089868
+      "lesion_negative_threshold": 0.2
     },
     "selected_background": {
       "background_teacher_threshold": 0.6,
-      "background_leaf_threshold": 0.15,
-      "precision": 0.998207064261924,
-      "recall": 0.9098410251204802,
-      "f1": 0.9519778287396757,
-      "accepted_pixels": 2523236
+      "background_leaf_threshold": 0.15
     },
     "test_split_used": false
   }

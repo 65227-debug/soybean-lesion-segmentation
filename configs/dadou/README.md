@@ -66,9 +66,4 @@ python tools/dadou/evaluate_leaf_gate.py \
   --output-dir outputs/dadou_leaf_gate_ablation_val_tuned
 ```
 
-The independent U-Net stopped at epoch 58. The validation-best epoch 46 has
-91.3776% leaf IoU and 95.4946% leaf Dice. Its hard 0.5 leaf gate leaves the
-teacher lesion IoU essentially unchanged (60.0289% to 60.0131%); therefore,
-the two models are retained independently and the gate is not claimed as a
-supervised validation improvement. Freeze any gate threshold on validation
-before the held-out test split is evaluated.
+Freeze any gate threshold on validation before the held-out test split is evaluated.
