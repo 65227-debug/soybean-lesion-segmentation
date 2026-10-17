@@ -2,7 +2,19 @@
 
 Keep all local data under the ignored `data/` directory. File paths in generated manifests must point to your own machine. Existing manifests from another machine generally need regeneration.
 
-The experiment datasets are available as separate [release downloads](../README.md#dataset-downloads), not Git source files. Each dataset package includes `prepare_paths.py` to restore its manifests and prepared layout on your machine.
+The datasets are available as separate [release downloads](../README.md#dataset-downloads), not Git source files. The Soybean lesion segmentation dataset contains 172 pixel-labeled images and 1,395 image-level/weakly labeled images, totaling 1,567 distinct originals. The separate Soybean original-pairs dataset contains 617 original image/mask pairs. Neither Soybean package assigns a fixed train/validation/test split or includes pseudo-label caches.
+
+## Downloaded data and split preparation
+
+The pixel-labeled data use the following directories, without split subdirectories:
+
+```text
+images/
+masks/
+annotations_json/
+```
+
+The original-pairs package contains `images/` and `masks/`. Image-level/weakly labeled images have no pixel masks. Configure your own train/validation/test split before constructing the local training directories and manifests. Keep source images and acquisition scenes disjoint across splits, and check for duplicate or near-duplicate images.
 
 ## Pixel-labeled segmentation data
 
@@ -26,7 +38,7 @@ data/dadou_mmseg/
   test/images/   test/masks/
 ```
 
-The pixel-labeled split contains 108 training, 36 validation and 36 test images. The independent leaf model merges labels 1 and 2 as leaf; its merge transform is in `projects/dadou_teacher/dadou_dataset.py`.
+Configure the split sizes and data paths for your own data. The independent leaf model merges labels 1 and 2 as leaf; its merge transform is in `projects/dadou_teacher/dadou_dataset.py`.
 
 Generate the student's aligned 512×512 supervised manifests without loading historical F pseudo labels:
 
@@ -48,8 +60,6 @@ The semantic preparation step generates the classification image directories plu
 The corrected base-map generator exports the three-channel teacher probabilities, leaf probabilities and LayerCAM arrays, plus `三张基础图生成清单.csv`. Generate the **corrected** evidence set with `--output-dir data/dadou/05_三张基础图_修正版` and explicit teacher/leaf configuration paths (see the reproduction guide). The default historical base-map directory is not the final G directory.
 
 `generate_corrected_pseudo_labels.py` reads that corrected evidence and the frozen selected gate. It writes images, uint8 class masks, uint16 continuous weights and `pseudo_train_manifest.csv` under `data/dadou_student_corrected_f/`. Its manifest columns are `sample_id,sample_type,split,class_name,scene_id,image_path,mask_path,weight_path,source_image_path`. Weight decoding is `uint16 / 65535.0`.
-
-The dataset contains 1,390 weak inputs and 1,354 prepared pseudo-labeled samples (917 frogeye, 437 target spot), spanning 293 scenes.
 
 ## Strong baselines and label-fraction experiments
 

@@ -2,17 +2,21 @@
 
 Research code for **semi-supervised soybean lesion segmentation with leaf spatial constraints and disease-semantic soft evidence**.
 
-This repository contains the complete local MMSegmentation **1.2.2 Python package**, model configurations, custom dataset/metric hooks, and experiment scripts. Dataset images, annotations and manifests are provided separately as release assets, not stored in the Git source tree. Model weights, training outputs and paper drafts are not included. Obtain the referenced pretrained weights separately.
+This repository contains the complete local MMSegmentation **1.2.2 Python package (199 Python files)**, model configurations, custom dataset/metric hooks, and experiment scripts. Datasets are provided separately as release assets, not stored in the Git source tree. Model weights, checkpoints, training results and paper drafts are not included. Obtain the referenced pretrained weights separately.
 
 中文说明见 [README_zh-CN.md](README_zh-CN.md).
 
 ## Dataset downloads
 
-- [Original image and mask pairs v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-original-images-masks-v1.0.0): 617 pairs, containing only `_original` images and masks from `img_dir` and `ann_dir`, with their existing 509/54/54 splits.
-- [Dadou experiment dataset v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-dadou-v1.0.0): supervised data, weakly labeled inputs, annotations, fixed splits and prepared pseudo-label training data. Download all five numbered ZIP parts and join them as described on the release page.
+- [Soybean lesion segmentation dataset v2.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-v2.0.0): 172 pixel-labeled images and 1,395 image-level/weakly labeled images, totaling 1,567 distinct originals. Includes masks and annotations, with no fixed train/validation/test split or pseudo-label cache.
+- [Soybean original image and mask pairs v2.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-original-pairs-v2.0.0): 617 original image/mask pairs, without a fixed split.
 - [MH-SoyaHealthVision experiment subset v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0): 80 manually annotated test images and 80 disjoint unlabeled adaptation images.
 
-The original-pairs package contains only images and masks, with a separate checksum. The experiment packages also include relative-path manifests and preparation instructions. Dataset files do not automatically inherit the software license.
+Configure your own train/validation/test splits before preparing the local training layout. Dataset files do not automatically inherit the software license.
+
+## Code download
+
+- [Source code v1.1.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/v1.1.0): complete MMSegmentation package (199 Python files), project configurations, tools and experiment scripts; no datasets, model weights, checkpoints or results.
 
 ## Models and labels
 
@@ -50,11 +54,11 @@ The paper's final G chain is **A supervised student → G0 corrected gate traini
 
 ## Data split and validation
 
-The dataset split is 108 labeled training, 36 validation and 36 internal-test images.
+Configure your own train/validation/test splits and update the data paths and split-size checks for your data.
 
 Final G and the baselines share the student architecture and data split. Final G uses more total training updates across its multi-stage chain; do not describe the full comparison as equal total training compute. The strong baselines are independent **protocol-aligned adaptations**, not exact reproductions of the original VOC/Cityscapes headline results.
 
-This source release has syntax, configuration, synthetic gating, model-forward and file-inclusion checks. The separate dataset downloads provide the experimental inputs and fixed splits; model checkpoints must be obtained by training. Numerical reproduction also depends on the documented software and training environment.
+This source release has syntax, configuration, synthetic gating, model-forward and file-inclusion checks. The separate Soybean dataset downloads contain original images and annotations without fixed splits; model checkpoints must be obtained by training. Numerical reproduction also depends on the documented software and training environment.
 
 ## Attribution and citation
 

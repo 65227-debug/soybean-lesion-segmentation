@@ -1,16 +1,20 @@
 # 融合叶片空间约束与病种语义软证据的大豆病斑分割
 
-本仓库用于公开论文实验代码，包含本项目使用的完整 MMSegmentation 1.2.2 Python 源码、配置、教师/叶片/病种语义模型、三张基础图、修正版三态门控、连续像素权重、学生蒸馏、消融及强半监督基线。
+本仓库用于公开论文实验代码，包含完整 MMSegmentation 1.2.2 Python 包（199个Python文件）、配置、教师/叶片/病种语义模型、三张基础图、修正版三态门控、连续像素权重、学生蒸馏、消融及强半监督基线。
 
-图像、标注和划分清单作为独立的数据集发布包提供，不放入 Git 源码历史。模型权重、训练结果及论文文件未包含。`data/`、`work_dirs/` 等本地目录已加入 `.gitignore`。
+图像和标注作为独立的数据集发布包提供，不放入 Git 源码历史。模型权重、checkpoint、训练结果及论文文件未包含。`data/`、`work_dirs/` 等本地目录已加入 `.gitignore`。
 
 ## 数据集下载
 
-- [Original 原图与掩码 v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-original-images-masks-v1.0.0)：仅含 `img_dir` 和 `ann_dir` 中的617对 `_original` 原图与掩码，保留原有509/54/54划分。
-- [Dadou 实验数据集 v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-dadou-v1.0.0)：精标数据、弱标签图像、人工标注、固定划分及已使用的伪标签训练数据。下载全部 5 个 ZIP 分卷，按发布页说明合并后解压。
+- [Soybean 病斑分割数据集 v2.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-v2.0.0)：172张像素级精标图像和1395张图像级/弱标注图像，共1567张不同原图；包含掩码和标注，不含固定训练/验证/测试划分及伪标签缓存。
+- [Soybean 原图与掩码 v2.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-original-pairs-v2.0.0)：617对原图与掩码，不含固定划分。
 - [MH-SoyaHealthVision 实验子集 v1.0.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0)：80 张人工像素标注测试图像和 80 张独立无标注适配图像。
 
-Original 包仅含原图和掩码，另附校验文件；实验数据包还含相对路径清单和使用说明。数据文件不自动适用软件许可证。
+请自行划分训练集、验证集和测试集，再整理本地训练目录。数据文件不自动适用软件许可证。
+
+## 代码下载
+
+- [完整源码 v1.1.0](https://github.com/652276002-debug/soybean-lesion-segmentation/releases/tag/v1.1.0)：包含完整MMSegmentation包（199个Python文件）、项目配置、工具和实验脚本，不含数据集、模型权重、checkpoint或结果。
 
 ## 复现入口
 
@@ -25,6 +29,6 @@ Original 包仅含原图和掩码，另附校验文件；实验数据包还含�
 
 ## 数据划分
 
-训练集108张、验证集36张、测试集36张。完整训练链的总计算量并不相等。UniMatch/ST++/U²PL 为协议对齐适配，保留官方引用和许可证来源。
+请自行配置训练/验证/测试划分、数据路径与数量校验。完整训练链的总计算量并不相等。UniMatch/ST++/U²PL 为协议对齐适配，保留官方引用和许可证来源。
 
 保留 OpenMMLab 的 Apache-2.0 许可证、版权声明和 `CITATION.cff`。论文作者、题目终稿和 DOI 确认后可另外补充，不覆盖上游贡献者信息。
