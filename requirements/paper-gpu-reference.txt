@@ -1,0 +1,4 @@
+# Reference versions only: install/build mutually compatible CUDA binaries.
+torch==2.8.0
+torchvision==0.23.0
+mmcv==2.1.0

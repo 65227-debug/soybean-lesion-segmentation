@@ -1,0 +1,18 @@
+{
+  "gating": {
+    "tau_p": 0.9,
+    "tau_n": 0.1,
+    "tau_s": 0.45,
+    "tau_sn": 0.2,
+    "leaf_threshold": 0.5,
+    "background_leaf_threshold": 0.1,
+    "erosion_radius": 5,
+    "min_leaf_inner_area_percent": 5.0,
+    "max_lesion_candidate_leaf_percent": 60.0,
+    "min_overlap_ratio": 0.1,
+    "min_semantic_confidence": 0.6,
+    "min_blur_score": 20.0,
+    "max_brightness_mean": 245.0,
+    "min_positive_pixels": 16
+  }
+}

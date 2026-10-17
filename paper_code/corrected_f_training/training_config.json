@@ -1,0 +1,30 @@
+{
+  "seed": 20260803,
+  "image_size": 512,
+  "max_epochs": 60,
+  "steps_per_epoch": 98,
+  "supervised_warmup_epochs": 15,
+  "unsupervised_ramp_end_epoch": 30,
+  "maximum_lambda_u": 0.05,
+  "supervised_batch_size": 4,
+  "pseudo_batch_size": 8,
+  "validation_batch_size": 8,
+  "workers": 4,
+  "learning_rate": 0.0003,
+  "minimum_learning_rate": 0.000001,
+  "weight_decay": 0.0001,
+  "gradient_clip_norm": 5.0,
+  "class_weights": [0.4914, 0.6319, 1.8768],
+  "pseudo_class_coefficients": [0.10, 0.25, 1.00],
+  "augmentation": {
+    "horizontal_flip_probability": 0.5,
+    "vertical_flip_probability": 0.2,
+    "rotation_degrees": 15.0,
+    "brightness_jitter": 0.15,
+    "contrast_jitter": 0.15,
+    "saturation_jitter": 0.15
+  },
+  "model_selection": "validation_mIoU_across_warmup_and_ssl",
+  "test_split_policy": "load only after all validation-based choices are frozen"
+}
+

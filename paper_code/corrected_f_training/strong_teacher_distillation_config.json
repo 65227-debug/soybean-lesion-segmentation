@@ -1,0 +1,50 @@
+{
+  "seed": 20260805,
+  "max_epochs": 28,
+  "steps_per_epoch": 55,
+  "supervised_batch_size": 4,
+  "pseudo_batch_size": 4,
+  "validation_batch_size": 4,
+  "workers": 4,
+  "learning_rate": 0.000005,
+  "weight_decay": 0.0001,
+  "gradient_clip_norm": 5.0,
+  "trainable_scope": "all",
+  "class_weights": [0.4914, 0.6319, 1.8768],
+  "supervised_disease_sampling_probability": {
+    "RAB": 0.4,
+    "TLS": 0.25,
+    "FLS": 0.2,
+    "HEA": 0.15
+  },
+  "balance_pseudo_by_scene_and_class": true,
+  "pseudo_class_sampling_probability": {
+    "frogeye": 0.5,
+    "target_spot": 0.5
+  },
+  "teacher_alpha_corrected_f": 0.325,
+  "teacher_healthy_logit_bias": -1.0,
+  "teacher_lesion_logit_bias": 0.3,
+  "strong_teacher_weight": 1.0,
+  "supervised_strong_teacher_weight": 0.12,
+  "temperature": 2.0,
+  "soft_target_ratio": 0.9,
+  "minimum_teacher_confidence": 0.7,
+  "outside_gate_lesion_minimum_probability": 0.45,
+  "outside_gate_minimum_confidence": 0.5,
+  "outside_gate_lesion_weight": 0.25,
+  "maximum_lambda_distill": 0.04,
+  "distillation_ramp_epochs": 8,
+  "distillation_class_coefficients": [0.2, 0.4, 1.4],
+  "lesion_tversky_weight": 0.1,
+  "tversky_alpha": 0.3,
+  "tversky_beta": 0.7,
+  "augmentation": {
+    "horizontal_flip_probability": 0.5,
+    "vertical_flip_probability": 0.2,
+    "rotation_degrees": 15,
+    "brightness_jitter": 0.15,
+    "contrast_jitter": 0.15,
+    "saturation_jitter": 0.12
+  }
+}
