@@ -1,25 +1,28 @@
-# Images and pixel labels
+# Images and manual pixel labels
 
-The Soybean dataset provides original images and annotations in flat directories:
+## Soybean manual annotations v2.1.0
+
+The [manual annotation package](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-manual-v2.1.0) contains 172 original soybean images, their manual LabelMe polygon annotations and corresponding pixel masks. Matching images, masks and annotation files share the same sample ID.
 
 ```text
 images/
 masks/
 annotations_json/
-metadata.csv
+metadata_samples.csv
 ```
 
-It contains 1,567 distinct original images. Of these, 172 have manual pixel masks and LabelMe polygons; the remaining images have image-level labels. `metadata.csv` links the image and annotation filenames and records disease and scene metadata.
-
-The separate 617-pair Soybean package contains only `images/` and `masks/`. Matching images and masks share the same filename stem.
+The included README describes the polygon-to-mask conversion. `metadata_samples.csv` links each image to its annotation and mask and records its source name and original filename. Source records comprise 94 ASDID images and 78 images from the annotation project's existing soybean collection. ASDID is available at https://doi.org/10.5061/dryad.41ns1rnj3.
 
 | Value | Meaning |
 | --- | --- |
 | 0 | Background |
 | 1 | Healthy leaf tissue |
 | 2 | Lesion |
-| 255 | Ignore |
 
-The binary leaf model merges healthy leaf and lesion into the foreground leaf class. Exported probability maps use uint16 encoding: `round(probability × 65535)`.
+The binary leaf model merges healthy leaf tissue and lesions into the foreground leaf class.
 
-The MH-SoyaHealthVision package retains its own directory layout and source notice.
+## MH-SoyaHealthVision subset v1.1.0
+
+The [MH-SoyaHealthVision package](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.1.0) contains 160 selected original images, 160 aligned 512 × 512 images, 80 manual LabelMe annotations and 80 corresponding manual pixel masks. The manually annotated and unlabelled groups contain 80 separate images each, with 20 images per disease category in each group.
+
+The package retains its own directory layout. Its README, manifests and file inventory provide image-to-annotation mappings and checksums. Pixel labels use the same 0/1/2 encoding. Source dataset: MH-SoyaHealthVision, Mendeley Data, version 1, https://doi.org/10.17632/hkbgh5s3b7.1. Source images are licensed under CC BY 4.0; see the included source notice for attribution.
