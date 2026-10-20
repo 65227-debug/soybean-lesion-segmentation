@@ -26,11 +26,10 @@ python tools/dadou/infer_leaf.py configs/soybean/leaf.py model.pth images/ --out
 ## 下载
 
 - [模型与推理源码 v1.2.0](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/v1.2.0)。
-- [Soybean病斑分割数据集](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-v2.0.0)：1567张不同原图，其中172张带像素级标注。
-- [Soybean原图与掩码](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-original-pairs-v2.0.0)：617对。
-- [MH-SoyaHealthVision子集](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0)。
+- [大豆人工标注数据 v2.1.0](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-manual-v2.1.0)：172张真实原图、人工LabelMe标注和对应像素掩膜。
+- [MH-SoyaHealthVision子集 v1.1.0](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.1.0)：160张真实原图，其中80张提供人工像素标注。
 
-数据目录与标签编码见[数据说明](docs/PAPER_DATA.md)。
+数据目录、原始数据来源和标签编码见[数据说明](docs/PAPER_DATA.md)。
 
 ## 许可
 

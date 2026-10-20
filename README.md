@@ -30,11 +30,10 @@ The probability exporters write class masks, overlays and uint16 probability map
 ## Downloads
 
 - [Model and inference source v1.2.0](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/v1.2.0).
-- [Soybean lesion segmentation dataset](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-v2.0.0): 1,567 original images, including 172 pixel-annotated images.
-- [Soybean original image/mask pairs](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-original-pairs-v2.0.0): 617 pairs.
-- [MH-SoyaHealthVision subset](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.0.0).
+- [Soybean manual annotations v2.1.0](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-soybean-manual-v2.1.0): 172 original images with manual LabelMe annotations and corresponding pixel masks.
+- [MH-SoyaHealthVision subset v1.1.0](https://github.com/65227-debug/soybean-lesion-segmentation/releases/tag/dataset-mh-soyahealthvision-v1.1.0): 160 original images, including 80 with manual pixel annotations.
 
-Dataset layouts and label encoding are described in [PAPER_DATA.md](docs/PAPER_DATA.md).
+Dataset layouts, source citations and label encoding are described in [PAPER_DATA.md](docs/PAPER_DATA.md).
 
 ## License
 
